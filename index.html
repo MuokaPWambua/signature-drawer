@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, intial-scale=1.0">
     <title>SIGNATURE DRAWER</title>
   </head>
-  <body>
+  <body style="background-color:blue">
     <canvas id='canvas'></canvas>
     <button onclick="download()">save</button>
     <script>
@@ -13,31 +13,31 @@
       const canvas = document.getElementById('canvas')
       const ctx = canvas.getContext('2d')
       
-      canvas.width = '50%'
-      canvas.height = '50%'
+      canvas.width = window.innerWidth/2 
+      canvas.height = window.innerHeight/2
       
       canvas.style.background = "white"
       let isDrawing = false;
       let mouseX = 0;
       let mouseY = 0;
     
-      canvas.addEventListner("mousedown", (e)=>{
+      canvas.addEventListener("mousedown", (e)=>{
         isDrawing = true
-        
+
         ctx.beginPath()
         mouseX = e.clientX;
         mouseY = e.clientY;
         ctx.moveTo(mouseX, mouseY)
       })      
       
-      canvas.addEventListner("mousemove", (e)=>{
+      canvas.addEventListener("mousemove", (e)=>{
         if (!isDrawing) return 1
         
         ctx.lineTo(e.clientX, e.clientY);
         ctx.stroke();
       })
       
-      canvas.addEventListner("mouseup", (e)=>{isDrawing=false})
+      canvas.addEventListener("mouseup", (e)=>{isDrawing=false})
       
       function download (){
         let imgData = canvas.toDataURL("image/png"),
