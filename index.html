@@ -1,0 +1,55 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>SIGNATURE DRAWER</title>
+  </head>
+  <body>
+    <canvas id='canvas'></canvas>
+    <button onclick="download()">save</button>
+    <script>
+      
+      const canvas = document.getElementById('canvas')
+      const ctx = canvas.getContext('2d')
+      
+      canvas.width = '50%'
+      canvas.height = '50%'
+      
+      canvas.style.background = "white"
+      let isDrawing = false;
+      let mouseX = 0;
+      let mouseY = 0;
+    
+      canvas.addEventListner("mousedown", (e)=>{
+        isDrawing = true
+        
+        ctx.beginPath()
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        ctx.moveTo(mouseX, mouseY)
+      })      
+      
+      canvas.addEventListner("mousemove", (e)=>{
+        if (!isDrawing) return 1
+        
+        ctx.lineTo(e.clientX, e.clientY);
+        ctx.stroke();
+      })
+      
+      canvas.addEventListner("mouseup", (e)=>{isDrawing=false})
+      
+      function download (){
+        let imgData = canvas.toDataURL("image/png"),
+        anchorTag = document.createElement("a");
+        
+        document.body.appendChild(anchorTag)
+        anchorTag.href = imgData
+        anchorTag.download = "imgData"
+        anchorTag.click()
+        document.body.removeChild(anchorTag)
+      }
+      
+    </script>
+  </body>
+</html>
